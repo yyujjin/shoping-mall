@@ -1,5 +1,6 @@
 const addButtons = document.querySelectorAll(".add")
 const ul = document.querySelector("ul")
+const totalElement = document.querySelector("#total")
 const list = [
     {
         name: "대창",
@@ -14,7 +15,9 @@ for (let i = 0; i < addButtons.length; i++) {
         list.push(
             {
                 name : addButtons[i].value,
-                price : addButtons[i].dataset.price
+                price : Number (addButtons[i].dataset.price)
+                //자바는 "1" +"2" = 3으로 인식 못함. 문자자체로 인식해서 "12" 이렇게 나옴
+                //이걸 숫자로 인식시켜 주는걸 nmber()
             }
         )
 
@@ -40,8 +43,12 @@ function deleteButtons() {
 
 function relist() {
     ul.innerHTML = ""
+    let total = 0
     for (let i = 0; i < list.length; i++) {
         ul.innerHTML += `<li>${list[i].name}<span>${list[i].price}</span>원<button class="deleteButtons"> 삭제하기</button></li>`
+        total = total + list[i].price
     }
     deleteButtons()
+    totalElement.innerHTML = total
 }
+
