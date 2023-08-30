@@ -28,6 +28,42 @@ app.get("/cart", (req, res) => {
     )
 })
 
+//추가라우트
+app.post("/cart", (req, res) => {
+    
+    console.log(req.query.name)
+
+    var mysql = require("mysql")
+    var connection = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "12345678",
+        database: "study",
+    })
+
+    connection.connect()
+
+    const name = req.query.name
+    const price = req.query.price
+    const amount = req.query.amount
+    
+    connection.query(
+        `insert into cart(name,price,amount) values(?,?,?);`,
+        [name, price, amount],
+        function (err, rows, fields) {
+            if (err) throw err
+            console.log(rows)
+
+            connection.end()
+            res.send()
+        }
+    )
+})
+
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
+
+
+
