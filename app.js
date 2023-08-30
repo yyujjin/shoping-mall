@@ -60,10 +60,38 @@ app.post("/cart", (req, res) => {
     )
 })
 
+//삭제라우트
+app.delete("/cart", (req, res) => {
+    
+    var mysql = require("mysql")
+    var connection = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "12345678",
+        database: "study",
+    })
+
+    connection.connect()
+
+    
+    connection.query(
+        `delete from cart where id = ?;`,
+        [req.query.id],
+        function (err, rows, fields) {
+            if (err) throw err
+            console.log(rows)
+
+            connection.end()
+            res.send()
+        }
+    )
+})
+
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
+
 
 
 
