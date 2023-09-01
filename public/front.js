@@ -5,6 +5,7 @@ const list = [
     {
         name: "대창",
         price: 30000,
+        amount: 10,
     },
 ]
 for (let i = 0; i < addButtons.length; i++) {
@@ -12,14 +13,21 @@ for (let i = 0; i < addButtons.length; i++) {
         alert("장바구니에 담으시겠습니까?")
         // 사용방법: 요소.dataset.속성이름(data-빼고)
         // list.push(addButtons[i].value)
-        list.push(
-            {
-                name : addButtons[i].value,
-                price : Number (addButtons[i].dataset.price)
+        const findmenu = list.findIndex(function (a) {
+            return a.name == addButtons[i].value
+        })
+        console.log(findmenu)
+        if (findmenu == -1) {
+            list.push({
+                name: addButtons[i].value,
+                price: Number(addButtons[i].dataset.price),
+                amount: 1,
                 //자바는 "1" +"2" = 3으로 인식 못함. 문자자체로 인식해서 "12" 이렇게 나옴
                 //이걸 숫자로 인식시켜 주는걸 nmber()
-            }
-        )
+            })
+        } else {
+            list[findmenu].amount += 1
+        }
 
         relist()
         console.log(list)
@@ -45,10 +53,9 @@ function relist() {
     ul.innerHTML = ""
     let total = 0
     for (let i = 0; i < list.length; i++) {
-        ul.innerHTML += `<li>${list[i].name}<span>${list[i].price}</span>원<button class="deleteButtons"> 삭제하기</button></li>`
+        ul.innerHTML += `<li>${list[i].name} <span>${list[i].amount}</span>개 <span>${list[i].price}</span>원<button class="deleteButtons"> 삭제하기</button></li>`
         total = total + list[i].price
     }
     deleteButtons()
     totalElement.innerHTML = total
 }
-
