@@ -13,11 +13,11 @@ for (let i = 0; i < addButtons.length; i++) {
         alert("장바구니에 담으시겠습니까?")
         // 사용방법: 요소.dataset.속성이름(data-빼고)
         // list.push(addButtons[i].value)
-        const findmenu = list.findIndex(function (a) {
+        const findmenu = list.findIndex(function (a) { //상수이름 변경 / list이름 변경 
             return a.name == addButtons[i].value
         })
         console.log(findmenu)
-        if (findmenu == -1) {
+        if (findmenu == -1) { 
             list.push({
                 name: addButtons[i].value,
                 price: Number(addButtons[i].dataset.price),
@@ -27,6 +27,9 @@ for (let i = 0; i < addButtons.length; i++) {
             })
         } else {
             list[findmenu].amount += 1
+            // list[findmenu].price += list[findmenu].price
+            // list[findmenu].price = list[findmenu].price + Number(addButtons[i].dataset.price)
+            list[findmenu].price += Number(addButtons[i].dataset.price)
         }
 
         relist()
