@@ -3,6 +3,9 @@ const app = express()
 const port = 3000
 app.use(express.static("public"))
 require("dotenv").config()
+
+app.use(express.json())
+app.use(express.urlencoded({extended:false}));
 //npm install mysql 터미널에 mysql연결해주는 명령어
 
 app.get("/cart", (req, res) => {
@@ -25,6 +28,11 @@ app.get("/cart", (req, res) => {
     })
 })
 
+// app.post("/test", (req, res) => {
+//     console.log(req.body)
+//     console.log(req.body.gender)
+// })
+
 //추가라우트
 app.post("/cart", (req, res) => {
     console.log(req.query.name)
@@ -39,10 +47,10 @@ app.post("/cart", (req, res) => {
 
     connection.connect()
 
-    const id = req.query.id
-    const name = req.query.name
-    const price = req.query.price
-    const amount = req.query.amount
+    const id = req.body.id
+    const name = req.body.name
+    const price = req.body.price
+    const amount = req.body.amount
 
     connection.query(
         `insert into cart(id,name,price,amount) values(?,?,?,?);`,

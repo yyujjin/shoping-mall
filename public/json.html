@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <script>
+            const user = {
+                name: "유진",
+                age: 26,
+            }
+
+            // 객체를 함수안에 넣어주면 json으로 바꿔줌
+            const jsonUser = JSON.stringify(user)
+            console.log(user)
+            console.log(jsonUser)
+
+            const food = {
+                id:1,
+                name:"달콤",
+                price:100
+            }
+
+            const jsonFood = JSON.stringify(food)
+            console.log(food)
+            console.log(jsonFood)
+
+            // await fetch(
+            //         `http://localhost:3000/cart`,
+            //         {
+            //             method: "POST",
+            //             headers: {
+
+            //                 "Content-Type": "application/json",
+            //                 // 'Content-Type': 'application/x-www-form-urlencoded',
+            //             },
+            //             body: user, // body의 데이터 유형은 반드시 "Content-Type" 헤더와 일치해야 함
+            //         } // 자바스크립트 객체를 json으로 바꿔줘야지만 서버가 읽을 수 있음!!
+            //     )
+        </script>
+    </body>
+</html>

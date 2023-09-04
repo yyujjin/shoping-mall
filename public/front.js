@@ -32,15 +32,33 @@ for (let i = 0; i < addButtons.length; i++) {
                 amount: 1,
             })
             //post라우트 연결
+            const add = {
+                id:id,
+                name:name,
+                price:price,
+                amount:1
+            }
+            const jsonAdd = JSON.stringify(add)
+            
             await fetch(
-                `http://localhost:3000/cart?id=${id}&name=${name}&price=${price}&amount=${1}`,
-                { method: "POST" }
+                `http://localhost:3000/cart`,
+                
+                {
+                    method: "POST",
+                    headers: {
+
+                        "Content-Type": "application/json",
+                        // 'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: jsonAdd // body의 데이터 유형은 반드시 "Content-Type" 헤더와 일치해야 함
+                }
             )
         } else {
             //수정 라우트 모르겠음
             list[findmenu].amount += 1
 
             list[findmenu].price += Number(addButtons[i].dataset.price)
+            // 쿼리스트링 방식으로 body로 바꾸기!
             await fetch(
                 `http://localhost:3000/cart?amount=${list[findmenu].amount}
             &price=${list[findmenu].price}
