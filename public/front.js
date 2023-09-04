@@ -2,9 +2,10 @@ const addButtons = document.querySelectorAll(".add")
 const ul = document.querySelector("ul")
 const totalElement = document.querySelector("#total")
 const BASE_URL = "http://localhost:3000/cart"
-let list = [ //에러나서 const->let으로 바꿔줌. 
+let list = [
+    //에러나서 const->let으로 바꿔줌.
     {
-        id : 0,
+        id: 0,
         name: "대창",
         price: 30000,
         amount: 10,
@@ -17,29 +18,37 @@ for (let i = 0; i < addButtons.length; i++) {
         const findmenu = list.findIndex(function (a) {
             //상수이름 변경 / list이름 변경
             return a.name == addButtons[i].value
+            //!조건이 충족한다면 그 인덱스를 보내라.
         })
         console.log(findmenu)
         if (findmenu == -1) {
+            const id = Number(addButtons[i].dataset.id)
+            const name = addButtons[i].value
+            const price = Number(addButtons[i].dataset.price)
             list.push({
-                id: Number(addButtons[i].dataset.id) ,
-                name: addButtons[i].value,
-                price: Number(addButtons[i].dataset.price),
+                id: id,
+                name: name,
+                price: price,
                 amount: 1,
-                
             })
-            //post라우트 연결 
+            //post라우트 연결
             await fetch(
-                `http://localhost:3000/cart?id=${Number(addButtons[i].dataset.id)}
-                &name=${addButtons[i].value}
-                &price=${Number(addButtons[i].dataset.price)}
-                &amount=${1}`,
-                {
-                    method: "POST",
-                }
+                `http://localhost:3000/cart?id=${id}&name=${name}&price=${price}&amount=${1}`,
+                { method: "POST" }
             )
         } else {
+            //수정 라우트 모르겠음
             list[findmenu].amount += 1
+
             list[findmenu].price += Number(addButtons[i].dataset.price)
+            await fetch(
+                `http://localhost:3000/cart?amount=${list[findmenu].amount}
+            &price=${list[findmenu].price}
+            &id=${Number(list[findmenu].id)}`,
+                {
+                    method: "PATCH",
+                }
+            )
         }
 
         relist()
@@ -65,10 +74,10 @@ function deleteButtons() {
 }
 
 async function relist() {
-    //get 라우트 연결 
+    //get 라우트 연결
     const res = await fetch(`${BASE_URL}`)
     const data = await res.json()
-    list = data  
+    list = data
     ul.innerHTML = ""
     let total = 0
     for (let i = 0; i < list.length; i++) {
