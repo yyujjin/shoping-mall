@@ -33,24 +33,23 @@ for (let i = 0; i < addButtons.length; i++) {
             })
             //post라우트 연결
             const add = {
-                id:id,
-                name:name,
-                price:price,
-                amount:1
+                id: id,
+                name: name,
+                price: price,
+                amount: 1,
             }
             const jsonAdd = JSON.stringify(add)
-            
+
             await fetch(
                 `http://localhost:3000/cart`,
-                
+
                 {
                     method: "POST",
                     headers: {
-
                         "Content-Type": "application/json",
                         // 'Content-Type': 'application/x-www-form-urlencoded',
                     },
-                    body: jsonAdd // body의 데이터 유형은 반드시 "Content-Type" 헤더와 일치해야 함
+                    body: jsonAdd, // body의 데이터 유형은 반드시 "Content-Type" 헤더와 일치해야 함
                 }
             )
         } else {
@@ -59,16 +58,35 @@ for (let i = 0; i < addButtons.length; i++) {
 
             list[findmenu].price += Number(addButtons[i].dataset.price)
             // 쿼리스트링 방식으로 body로 바꾸기!
+            const amount = list[findmenu].amount
+            const price = list[findmenu].price
+            const id = Number(list[findmenu].id)
+            // await fetch(
+            //     `http://localhost:3000/cart?amount=${list[findmenu].amount}
+            // &price=${list[findmenu].price}
+            // &id=${Number(list[findmenu].id)}`,
+            //     {
+            //         method: "PATCH",
+            //     }
+            // )
+            const modify = {
+                amount: amount,
+                price: price,
+                id: id,
+            }
+            const jsonModify = JSON.stringify(modify)
             await fetch(
-                `http://localhost:3000/cart?amount=${list[findmenu].amount}
-            &price=${list[findmenu].price}
-            &id=${Number(list[findmenu].id)}`,
+                `http://localhost:3000/cart`,
+
                 {
                     method: "PATCH",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: jsonModify,
                 }
             )
         }
-
         relist()
         console.log(list)
     })

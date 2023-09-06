@@ -90,7 +90,7 @@ app.delete("/cart", (req, res) => {
     )
 })
 
-//수정 라우트  모르겠음 /////////
+
 app.patch("/cart", (req, res) => {
     console.log("hi")
     var mysql = require("mysql")
@@ -100,9 +100,9 @@ app.patch("/cart", (req, res) => {
         password: process.env.DB_PASSWORD,
         database: "study",
     })
-    const id = req.query.id
-    const amount = req.query.amount
-    const price = req.query.price
+    const id = req.body.id
+    const amount = req.body.amount
+    const price = req.body.price
     connection.connect()
 
     connection.query(
